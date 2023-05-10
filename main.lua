@@ -755,7 +755,8 @@ function love.load()
 		delete_mappack(v)
 	end
 
-	intro_load()
+	-- intro_load()
+	menu_load()
 end
 
 function love.update(dt)
