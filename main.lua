@@ -1080,18 +1080,29 @@ function defaultconfig()
 	-- joy, #, but, #
 	-- You cannot set Hats and Axes as the jump button. Bummer.
 
-	mouseowner = 1
-
 	controls = {}
 
 	local i = 1
 	controls[i] = {}
-	controls[i]["right"] = {"d"}
-	controls[i]["left"] = {"a"}
-	controls[i]["down"] = {"s"}
-	controls[i]["up"] = {"w"}
-	controls[i]["run"] = {"lshift"}
-	controls[i]["jump"] = {"space"}
+	if isgameshell() then
+		mouseowner = 0
+
+		controls[i]["right"] = {"right"}
+		controls[i]["left"] = {"left"}
+		controls[i]["down"] = {"down"}
+		controls[i]["up"] = {"up"}
+		controls[i]["run"] = {"k"}
+		controls[i]["jump"] = {"j"}
+	else
+		mouseowner = 1
+
+		controls[i]["right"] = {"d"}
+		controls[i]["left"] = {"a"}
+		controls[i]["down"] = {"s"}
+		controls[i]["up"] = {"w"}
+		controls[i]["run"] = {"lshift"}
+		controls[i]["jump"] = {"space"}
+	end
 	controls[i]["aimx"] = {""} --mouse aiming, so no need
 	controls[i]["aimy"] = {""}
 	controls[i]["portal1"] = {""}
@@ -1158,8 +1169,13 @@ function defaultconfig()
 	flowercolor = {{252/255, 216/255, 168/255}, {216/255,  40/255,   0/255}, {252/255, 152/255,  56/255}}
 
 	--options
-	scale = 2
-	width = 25
+	if isgameshell() then
+		scale = 1
+		width = 20
+	else
+		scale = 2
+		width = 25
+	end
 	volume = 1
 	mappack = "smb"
 	vsync = -1
@@ -1682,5 +1698,15 @@ function loadcustombackground()
 		custombackgroundimg[i] = love.graphics.newImage("graphics/SMB/portalbackground.png")
 		custombackgroundwidth[i] = custombackgroundimg[i]:getWidth()/16
 		custombackgroundheight[i] = custombackgroundimg[i]:getHeight()/16
+	end
+end
+
+function isgameshell()
+	local f = io.open("/etc/clockworkpi_os_image_version", "r")
+	if f ~= nil then
+		io.close(f)
+		return true
+	else
+		return false
 	end
 end

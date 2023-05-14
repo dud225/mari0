@@ -1597,7 +1597,7 @@ function menu_keypressed(key, unicode)
 				game_load(true)
 			elseif selection == 1 then
 				selectworld()
-			elseif selection == 2 then
+			elseif not isgameshell() and selection == 2 then
 				editormode = true
 				players = 1
 				playertype = "portal"
@@ -1611,7 +1611,7 @@ function menu_keypressed(key, unicode)
 				infinitetime = false
 				infinitelives = false
 				game_load()
-			elseif selection == 3 then
+			elseif not isgameshell() and selection == 3 then
 				gamestate = "mappackmenu"
 				mappacks()
 			elseif selection == 4 then
@@ -1619,11 +1619,11 @@ function menu_keypressed(key, unicode)
 			end
 		elseif key == "escape" then
 			love.event.quit()
-		elseif (key == "left" or key == "a") then
+		elseif not isgameshell() and (key == "left" or key == "a") then
 			if players > 1 then
 				players = players - 1
 			end
-		elseif (key == "right" or key == "d") then
+		elseif not isgameshell() and (key == "right" or key == "d") then
 			players = players + 1
 			if players > 4 then
 				players = 4
